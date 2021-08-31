@@ -16,26 +16,25 @@ const displayComment = comments => {
         div.innerHTML = `
         <p>${comment.id}</p>
         <h3>${comment.email}</h3>
-        <button onclick="loadDetails('${comment.id}')" >details </button>
+        <button onclick="loadDetails(this)" >details </button>
         <div id="details"></div>
         `
         divComment.appendChild(div)
     });
 }
 
-const loadDetails = async id => {
+const loadDetails = async element => {
+    const id = element.previousSibling.previousSibling.previousSibling.previousSibling.innerHTML;
+    // console.log(id)
+    const details = element.nextSibling.nextSibling;
+    // console.log(details)
     const url = `https://jsonplaceholder.typicode.com/comments/${id}`
     const res = await fetch(url);
     const data = await res.json();
-    displayDetails(data);
+    displayDetails(data, details);
 }
 
-const displayDetails = data => {
-    // console.log(data)
-
-    const divDetails = document.getElementById('details');
-    divDetails.innerHTML = `
+const displayDetails = (data, details) => {
+    details.innerHTML = `
     <p>${data.body}</p>`
-
-
 }
